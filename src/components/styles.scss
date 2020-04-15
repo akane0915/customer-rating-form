@@ -1,5 +1,73 @@
+$inactive: #d3d3d3;
+$active: #04FFB4;
+
+$black: #000;
+$white: #FFF;
+$dark-blue: #1c2e4a;
+$light-blue: #1E90FF;
+
 .app {
+  form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    background-color: $inactive;
+    border-radius: 50%;
+    margin: 2px 5px;
+    padding: 10px 14px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $active;
+    }
+  }
+
+  input[type="radio"] {
+    display: none;
+  }
+
   .filled {
-    background-color: #008080;
+    background-color: $active;
+  }
+
+  .rating-options {
+    margin: 10px 0px;
+  }
+
+  .action-buttons {
+    margin: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    width: 250px;
+  }
+
+  .skip {
+    background-color: $white;
+    border-radius: 20px;
+    border: 2px $dark-blue solid;
+    color: $dark-blue;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 40px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .submit {
+    background-color: $light-blue;
+    border-radius: 20px;
+    color: $white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 40px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

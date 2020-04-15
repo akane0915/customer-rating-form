@@ -2,8 +2,25 @@ import React, { useState } from 'react';
 import './styles.scss';
 
 const App = () => {
-  const [selectionMade, setSelectionMade] = useState(false);
-  const [rating, SetRating] = useState([]);
+  const [submitEnabled, setSubmitEnabled] = useState(false);
+  const [rating, setRating] = useState([]);
+
+  const buildRatingOptions = () => {
+    const availableOptions = [1, 2, 3, 4, 5];
+
+    return availableOptions.map((option) => {
+      return (
+        <label
+          key={option}
+          className={rating.includes(option) ? 'filled' : ''}
+          onClick={() => { updateRating(option) }}
+          htmlFor={option}>
+          <input type='radio' id={option} name={option} value={option} />
+          {option}
+        </label>
+      )
+    })
+  }
 
   const updateRating = (value) => {
     const ratingArray = new Array(value);
@@ -12,38 +29,37 @@ const App = () => {
       ratingArray[index] = index + 1;
     }
 
-    setSelectionMade(true);
-    SetRating(ratingArray);
+    setSubmitEnabled(true);
+    setRating(ratingArray);
   }
 
-  const buildRatingOptions = () => {
-    const availableRatings = [1, 2, 3, 4, 5];
-
-    return availableRatings.map((el) => {
-      return (
-        <label
-          className={rating.includes(el) ? 'filled' : ''}
-          onClick={() => { updateRating(el) }}
-          htmlFor={el}>
-          <input type="radio" id={el} name={el} value={el} />
-          {el}
-        </label>
-      )
-    })
+  const skip = () => {
+    //skip logic goes here
+    console.log('skip!');
   }
 
   return (
-    <div className={"app"}>
-      <form>
+    <div className={'app'}>
+      <form
+        method="get">
         <h1>We love to hear your feedback!</h1>
-        <p>On a scale of 1-5 how likely are you to recommend this service?</p>
-        {buildRatingOptions()}
-        <button>Skip</button>
-        <input
-          disabled={!selectionMade}
-          type="submit"
-          value={rating[rating.length]}>
-        </input>
+        <p>On a scale of 1-5, how likely are you to recommend this service?</p>
+        <div className='rating-options'>
+          {buildRatingOptions()}
+        </div>
+        <div className='action-buttons'>
+          <button
+            className='skip'
+            onClick={() => skip()}>
+            Skip
+          </button>
+          <input
+            aria-label='submit'
+            className='submit'
+            disabled={!submitEnabled}
+            type='submit'
+            value={'Submit'} />
+        </div>
       </form>
     </div >
   );
