@@ -2,47 +2,50 @@ import React, { useState } from 'react';
 import './styles.scss';
 
 const App = () => {
-  const [selectionMade, setselectionMade] = useState(false);
-  const [active, setActive] = useState(null);
+  const [selectionMade, setSelectionMade] = useState(false);
+  const [rating, SetRating] = useState([]);
 
-  const updateActive = (value) => {
-    let updatedValue = [];
-    const array = new Array(value);
+  const updateRating = (value) => {
+    const ratingArray = new Array(value);
 
-    array.forEach((value, i) => {
-      updatedValue.push(i + 1)
-    });
+    for (let index = 0; index < ratingArray.length; index++) {
+      ratingArray[index] = index + 1;
+    }
 
-    setselectionMade(true);
-    setActive(updatedValue.toString());
+    setSelectionMade(true);
+    SetRating(ratingArray);
   }
+
+  const buildRatingOptions = () => {
+    const availableRatings = [1, 2, 3, 4, 5];
+
+    return availableRatings.map((el) => {
+      return (
+        <label
+          className={rating.includes(el) ? 'filled' : ''}
+          onClick={() => { updateRating(el) }}
+          htmlFor={el}>
+          <input type="radio" id={el} name={el} value={el} />
+          {el}
+        </label>
+      )
+    })
+  }
+
   return (
-    <main className={"app"}>
+    <div className={"app"}>
       <form>
         <h1>We love to hear your feedback!</h1>
-        <button
-          className={active === '1' ? 'active' : ''}
-          onClick={() => { updateActive(1) }}>1</button>
-        <button
-          className={active === '1,2' ? 'active' : ''}
-          onClick={() => { updateActive(2) }}>2</button>
-        <button
-          className={active === '1,2,3' ? 'active' : ''}
-          onClick={() => { updateActive(3) }}>3</button>
-        <button
-          className={active === '1,2,3,4' ? 'active' : ''}
-          onClick={() => { updateActive(4) }}>4</button>
-        <button
-          className={active === '1,2,3,4,5' ? 'active' : ''}
-          onClick={() => { updateActive(5) }}>5</button>
+        <p>On a scale of 1-5 how likely are you to recommend this service?</p>
+        {buildRatingOptions()}
         <button>Skip</button>
         <input
           disabled={!selectionMade}
           type="submit"
-          value={active}>
+          value={rating[rating.length]}>
         </input>
       </form>
-    </main>
+    </div >
   );
 };
 
